@@ -6,7 +6,7 @@
 * 快捷配置
 * 可适配其他专业
 # 配置config.json
-配置文件信息基于抓包
+配置文件信息基于抓包\
 Cookie字段从江苏共青团获取
 ![img](https://github.com/MengTL4/CWXUDaXueXi/blob/main/IMG/1.png)
 Authorization字段和member_id字段从班级小管家获取
