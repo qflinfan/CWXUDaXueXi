@@ -123,6 +123,6 @@ func SubmitData(id string, create_at string, filepath string, invest string, mem
 		SetSuccessResult(&response).
 		Post("https://a.welife001.com/applet/notify/feedbackWithOss")
 	if response.Code == 0 {
-		fmt.Println("成功完成本期青年大学习!")
+		fmt.Println("成功完成" + create_at + "青年大学习!")
 	}
 }
