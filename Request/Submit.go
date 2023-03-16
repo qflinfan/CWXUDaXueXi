@@ -3,15 +3,30 @@ package Request
 import (
 	"fmt"
 	"github.com/imroc/req/v3"
+	"math/rand"
 	"regexp"
+	"strconv"
+	"time"
 )
 
-func SubmitPng(XCosSecurityToken string, Authorization string) string {
+func generateRandomString(length int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	rand.NewSource(time.Now().UnixNano())
+	result := ""
+	for i := 0; i < length; i++ {
+		index := rand.Intn(len(charset))
+		result += string(charset[index])
+	}
+	key := "11oWRkU0aXAjlcP9IeY9lKaHk0XltI_img/" + result + "_cos@513.png"
+	return key
+}
+
+func SubmitPng(key string, XCosSecurityToken string, Authorization string) string {
 	client := req.C()
 	submit, _ := client.R().
 		SetFile("file", "test.png").
 		SetFormData(map[string]string{
-			"key":                   "11oWRkU0aXAjlcP9IeY9lKaHk0XltI_img/test123456_cos@513.png",
+			"key":                   key,
 			"success_action_status": "200",
 			"Signature":             Authorization,
 			"Content-Type":          "",
@@ -29,6 +44,7 @@ type Code struct {
 }
 
 func SubmitData(id string, create_at string, filepath string, invest string, member_id string, authorization string) {
+	timeunix := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
 	requestbody := map[string]interface{}{
 		"extra":       1,
 		"id":          id,
@@ -89,7 +105,7 @@ func SubmitData(id string, create_at string, filepath string, invest string, mem
 			"create_at": create_at,
 			"update_at": create_at,
 			"__v":       0,
-			"time":      1678916310242,
+			"time":      timeunix,
 		},
 		"feedback_text": "",
 	}
