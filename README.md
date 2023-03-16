@@ -11,3 +11,7 @@ Cookie字段从江苏共青团获取
 ![img](https://github.com/MengTL4/CWXUDaXueXi/blob/main/IMG/1.png)
 Authorization字段和member_id字段从班级小管家获取
 ![img](https://github.com/MengTL4/CWXUDaXueXi/blob/main/IMG/2.png)
+# 编译命令
+`go build`
+# 运行截图
+![img](https://github.com/MengTL4/CWXUDaXueXi/blob/main/IMG/3.gif)
