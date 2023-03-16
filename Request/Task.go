@@ -8,7 +8,8 @@ func Task() {
 	pngid := DoLesson(lessonid, cookie)
 	Download(pngid)
 	XCosSecurityToken, Authorization := GetAuthentication(authorization)
-	filepath := SubmitPng(XCosSecurityToken, Authorization)
+	key := generateRandomString(4)
+	filepath := SubmitPng(key, XCosSecurityToken, Authorization)
 	id, create_at, invest := GetInfo(authorization, member_id)
 	SubmitData(id, create_at, filepath, invest, member_id, authorization)
 }
