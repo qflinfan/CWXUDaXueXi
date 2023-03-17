@@ -1,36 +1,17 @@
 package Request
 
 import (
+	"fmt"
 	"github.com/imroc/req/v3"
 )
 
-// InfoData 定义一个结构体来存储json数据中的data字段
-type InfoData struct {
-	ID       string `json:"_id"`
-	CreateAt string `json:"create_at"`
-	Invest   string `json:"invest"`
-}
-
-// Response3 定义一个结构体来存储整个json数据
-type Response3 struct {
-	Code int        `json:"code"`
-	Msg  string     `json:"msg"`
-	Data []InfoData `json:"data"`
-}
-
-// AuthenticationData 定义一个 AuthenticationData 结构体，包含四个字段
 type AuthenticationData struct {
-	ExpiredTime       int    `json:"expiredTime"`
-	RequestId         string `json:"requestId"`
 	XCosSecurityToken string `json:"XCosSecurityToken"`
 	Authorization     string `json:"Authorization"`
 }
 
-// AuthenticationResponse 定义一个 AuthenticationResponse 结构体，包含三个字段
 type AuthenticationResponse struct {
-	Code int                `json:"code"`
-	Msg  string             `json:"msg"`
-	Data AuthenticationData `json:"data"` // 这里使用了 Data 结构体作为字段类型
+	Data AuthenticationData `json:"data"`
 }
 
 func GetAuthentication(authorization string) (string, string) {
@@ -51,8 +32,17 @@ func GetAuthentication(authorization string) (string, string) {
 	return response.Data.XCosSecurityToken, response.Data.Authorization
 }
 
-func GetInfo(authorization string, member_id string) (string, string, string) {
-	var response Response3
+type InfoResponse struct {
+	Data []InfoData `json:"data"`
+}
+
+type InfoData struct {
+	ID       string `json:"_id"`
+	CreateAt string `json:"create_at"`
+}
+
+func GetInfo(authorization string, member_id string) (string, string) {
+	var response InfoResponse
 	client := req.C()
 	_, _ = client.R().
 		SetHeaders(map[string]string{
@@ -67,5 +57,112 @@ func GetInfo(authorization string, member_id string) (string, string, string) {
 		}).
 		SetSuccessResult(&response).
 		Get("https://a.welife001.com/info/getParent?type=-1&members={members}&page=0&size=10&date=-1&hasMore=true")
-	return response.Data[0].ID, response.Data[0].CreateAt, response.Data[0].Invest
+	return response.Data[0].ID, response.Data[0].CreateAt
+}
+
+type InfoResponseStudent struct {
+	Data []InfoDataStudent `json:"data"`
+}
+
+type InfoDataStudent struct {
+	Notify Notify `json:"notify"`
+}
+
+type Notify struct {
+	Invest Invest `json:"invest"`
+}
+
+type Invest struct {
+	ID      string    `json:"_id"`
+	Subject []Subject `json:"subject"`
+}
+
+type Subject struct {
+	ID          string        `json:"_id"`
+	ItemDetails []ItemDetails `json:"item_details"`
+	CreateAt    string        `json:"create_at"`
+}
+
+type ItemDetails struct {
+	ID string `json:"_id"`
+}
+
+func GetInfoStudent(authorization string, id string) (string, string, string, string) {
+	var response InfoResponseStudent
+	client := req.C()
+	_, _ = client.R().
+		SetHeaders(map[string]string{
+			"Authorization":   authorization,
+			"Referer":         "https://servicewechat.com/wx23d8d7ea22039466/1908/page-frame.html",
+			"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6500",
+			"Content-Type":    "application/json",
+			"Accept-Language": "zh-CN,zh",
+		}).
+		SetBodyJsonMarshal(map[string]string{
+			"extra": "1",
+			"_id":   id,
+			"page":  "0",
+			"size":  "10",
+		}).
+		SetSuccessResult(&response).
+		Post("https://a.welife001.com/applet/notify/checkNew2Parent")
+	investid := response.Data[0].Notify.Invest.ID
+	subjectid := response.Data[0].Notify.Invest.Subject[0].ID
+	itemDetailstudentid1 := response.Data[0].Notify.Invest.Subject[0].ItemDetails[0].ID
+	itemDetailstudentid2 := response.Data[0].Notify.Invest.Subject[0].ItemDetails[1].ID
+	fmt.Println(investid, subjectid, itemDetailstudentid1, itemDetailstudentid2)
+	return investid, subjectid, itemDetailstudentid1, itemDetailstudentid2
+}
+
+type InfoResponseTeacher struct {
+	Data InfoDataTeacher `json:"data"`
+}
+
+type InfoDataTeacher struct {
+	Accepts []Accepts `json:"accepts"`
+}
+
+type Accepts struct {
+	Answer Answer `json:"answer"`
+}
+
+type Answer struct {
+	ID             string           `json:"_id"`
+	SubjectTeacher []SubjectTeacher `json:"subject"`
+}
+
+type SubjectTeacher struct {
+	ID          string        `json:"_id"`
+	ItemDetails []ItemDetails `json:"item_details"`
+	CreateAt    string        `json:"create_at"`
+}
+
+type ItemDetailsTeacher struct {
+	ID string `json:"_id"`
+}
+
+func GetInfoTeacher(authorization string, id string) (string, string, string, string) {
+	var response InfoResponseTeacher
+	client := req.C()
+	_, _ = client.R().
+		SetHeaders(map[string]string{
+			"Authorization":   authorization,
+			"Referer":         "https://servicewechat.com/wx23d8d7ea22039466/1908/page-frame.html",
+			"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6500",
+			"Content-Type":    "application/json",
+			"Accept-Language": "zh-CN,zh",
+		}).
+		SetBodyJsonMarshal(map[string]string{
+			"extra": "1",
+			"_id":   id,
+			"page":  "0",
+			"size":  "10",
+		}).
+		SetSuccessResult(&response).
+		Post("https://a.welife001.com/applet/notify/checkNew2Parent")
+	answerid := response.Data.Accepts[0].Answer.ID
+	subjecteacherid := response.Data.Accepts[0].Answer.SubjectTeacher[0].ID
+	itemDetailsteacherid1 := response.Data.Accepts[0].Answer.SubjectTeacher[0].ItemDetails[0].ID
+	itemDetailsteacherid2 := response.Data.Accepts[0].Answer.SubjectTeacher[0].ItemDetails[1].ID
+	return answerid, subjecteacherid, itemDetailsteacherid1, itemDetailsteacherid2
 }
