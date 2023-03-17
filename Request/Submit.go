@@ -43,7 +43,7 @@ type Code struct {
 	Code int `json:"code"`
 }
 
-func SubmitData(id string, create_at string, filepath string, invest string, member_id string, authorization string) {
+func SubmitData(id string, create_at string, filepath string, member_id string, authorization string, investid string, subjectid string, itemDetailsid1 string, itemDetailsid2 string) {
 	timeunix := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
 	requestbody := map[string]interface{}{
 		"extra":       1,
@@ -56,20 +56,20 @@ func SubmitData(id string, create_at string, filepath string, invest string, mem
 		"invest": map[string]interface{}{
 			"is_tmp":     true,
 			"is_private": false,
-			"_id":        invest,
+			"_id":        investid,
 			"subject": []map[string]interface{}{
 				{
 					"seq":          0,
 					"cate":         5,
 					"inputs_count": 0,
-					"_id":          invest,
+					"_id":          subjectid,
 					"inputs":       []map[string]interface{}{},
 					"item_details": []map[string]interface{}{
 						{
 							"seq":          0,
 							"checks_count": 0,
 							"rate":         0,
-							"_id":          "619e3783e30bcc281f7a8403",
+							"_id":          itemDetailsid1,
 							"file":         []map[string]interface{}{},
 							"checkedlist":  []map[string]interface{}{},
 							"name":         "",
@@ -78,7 +78,7 @@ func SubmitData(id string, create_at string, filepath string, invest string, mem
 							"seq":          1,
 							"checks_count": 0,
 							"rate":         0,
-							"_id":          "619e3783e30bcc281f7a8404",
+							"_id":          itemDetailsid2,
 							"file":         []map[string]interface{}{},
 							"checkedlist":  []map[string]interface{}{},
 							"name":         "",
