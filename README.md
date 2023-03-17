@@ -7,7 +7,7 @@
 * 快捷配置
 * 可适配其他专业
 # 配置config.json
-配置文件信息基于抓包\
+配置文件信息基于抓包
 * identity字段表示团支书(或老师)身份，即收班级小管家作业的人的系统身份，填student或teacher，student表示班委，teacher表示老师
 * Cookie字段从江苏共青团获取
 ![img](https://github.com/MengTL4/CWXUDaXueXi/blob/main/IMG/1.png)
