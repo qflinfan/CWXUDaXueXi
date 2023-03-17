@@ -43,7 +43,7 @@ type Code struct {
 	Code int `json:"code"`
 }
 
-func SubmitData(id string, create_at string, filepath string, member_id string, authorization string, investid string, subjectid string, itemDetailsid1 string, itemDetailsid2 string) {
+func SubmitDataStudent(id string, create_at string, filepath string, member_id string, authorization string, investid string, subjectid string, itemDetailsid1 string, itemDetailsid2 string) {
 	timeunix := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
 	requestbody := map[string]interface{}{
 		"extra":       1,
@@ -106,6 +106,45 @@ func SubmitData(id string, create_at string, filepath string, member_id string, 
 			"update_at": create_at,
 			"__v":       0,
 			"time":      timeunix,
+		},
+		"feedback_text": "",
+	}
+	var response Code
+	client := req.C()
+	_, _ = client.R().
+		SetBodyJsonMarshal(requestbody).
+		SetHeaders(map[string]string{
+			"Authorization":   authorization,
+			"Referer":         "https://servicewechat.com/wx23d8d7ea22039466/1908/page-frame.html",
+			"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6500",
+			"Content-Type":    "application/json",
+			"Accept-Language": "zh-CN,zh",
+		}).
+		SetSuccessResult(&response).
+		Post("https://a.welife001.com/applet/notify/feedbackWithOss")
+	if response.Code == 0 {
+		fmt.Println("成功完成" + create_at + "青年大学习!")
+	}
+}
+
+func SubmitDataTeacher(id string, create_at string, filepath string, member_id string, authorization string) {
+	requestbody := map[string]interface{}{
+		"extra":       1,
+		"id":          id,
+		"daka_day":    "",
+		"submit_type": "submit",
+		"networkType": "wifi",
+		"member_id":   member_id,
+		"op":          "add",
+		"files": []map[string]interface{}{
+			{
+				"file":     "wxfile://temp/test.png",
+				"cate":     "img",
+				"new_name": filepath,
+				"type":     1,
+				"size":     525128,
+				"uploaded": true,
+			},
 		},
 		"feedback_text": "",
 	}
