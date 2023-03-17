@@ -1,5 +1,6 @@
 {
   "Cookie" : "xxxx",
   "Authorization" : "xxxx",
-  "member_id" : "xxxx"
+  "member_id" : "xxxx",
+  "identity" : "xxxx"
 }
