@@ -13,9 +13,10 @@ func Task() {
 	id, create_at := GetInfo(authorization, member_id)
 	if identity == "student" {
 		investid, subjectid, itemDetailstudentid1, itemDetailstudentid2 := GetInfoStudent(authorization, id)
-		SubmitData(id, create_at, filepath, member_id, authorization, investid, subjectid, itemDetailstudentid1, itemDetailstudentid2)
+		SubmitDataStudent(id, create_at, filepath, member_id, authorization, investid, subjectid, itemDetailstudentid1, itemDetailstudentid2)
 	} else {
-		answerid, subjecteacherid, itemDetailsteacherid1, itemDetailsteacherid2 := GetInfoTeacher(authorization, id)
-		SubmitData(id, create_at, filepath, member_id, authorization, answerid, subjecteacherid, itemDetailsteacherid1, itemDetailsteacherid2)
+		//在accepts数组有数据是启用
+		//answerid, subjecteacherid, itemDetailsteacherid1, itemDetailsteacherid2 := GetInfoTeacher(authorization, id)
+		SubmitDataTeacher(id, create_at, filepath, member_id, authorization)
 	}
 }
