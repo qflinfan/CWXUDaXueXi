@@ -114,55 +114,56 @@ func GetInfoStudent(authorization string, id string) (string, string, string, st
 	return investid, subjectid, itemDetailstudentid1, itemDetailstudentid2
 }
 
-type InfoResponseTeacher struct {
-	Data InfoDataTeacher `json:"data"`
-}
+//以下代码在accept数组有数据时可用
+//type InfoResponseTeacher struct {
+//	Data InfoDataTeacher `json:"data"`
+//}
+//
+//type InfoDataTeacher struct {
+//	Accept Accept `json:"accept"`
+//}
+//
+//type Accept struct {
+//	Answer Answer `json:"answer"`
+//}
+//
+//type Answer struct {
+//	ID             string           `json:"_id"`
+//	SubjectTeacher []SubjectTeacher `json:"subject"`
+//}
+//
+//type SubjectTeacher struct {
+//	ID          string        `json:"_id"`
+//	ItemDetails []ItemDetails `json:"item_details"`
+//	CreateAt    string        `json:"create_at"`
+//}
+//
+//type ItemDetailsTeacher struct {
+//	ID string `json:"_id"`
+//}
 
-type InfoDataTeacher struct {
-	Accepts []Accepts `json:"accepts"`
-}
-
-type Accepts struct {
-	Answer Answer `json:"answer"`
-}
-
-type Answer struct {
-	ID             string           `json:"_id"`
-	SubjectTeacher []SubjectTeacher `json:"subject"`
-}
-
-type SubjectTeacher struct {
-	ID          string        `json:"_id"`
-	ItemDetails []ItemDetails `json:"item_details"`
-	CreateAt    string        `json:"create_at"`
-}
-
-type ItemDetailsTeacher struct {
-	ID string `json:"_id"`
-}
-
-func GetInfoTeacher(authorization string, id string) (string, string, string, string) {
-	var response InfoResponseTeacher
-	client := req.C()
-	_, _ = client.R().
-		SetHeaders(map[string]string{
-			"Authorization":   authorization,
-			"Referer":         "https://servicewechat.com/wx23d8d7ea22039466/1908/page-frame.html",
-			"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6500",
-			"Content-Type":    "application/json",
-			"Accept-Language": "zh-CN,zh",
-		}).
-		SetBodyJsonMarshal(map[string]string{
-			"extra": "1",
-			"_id":   id,
-			"page":  "0",
-			"size":  "10",
-		}).
-		SetSuccessResult(&response).
-		Post("https://a.welife001.com/applet/notify/checkNew2Parent")
-	answerid := response.Data.Accepts[0].Answer.ID
-	subjecteacherid := response.Data.Accepts[0].Answer.SubjectTeacher[0].ID
-	itemDetailsteacherid1 := response.Data.Accepts[0].Answer.SubjectTeacher[0].ItemDetails[0].ID
-	itemDetailsteacherid2 := response.Data.Accepts[0].Answer.SubjectTeacher[0].ItemDetails[1].ID
-	return answerid, subjecteacherid, itemDetailsteacherid1, itemDetailsteacherid2
-}
+//func GetInfoTeacher(authorization string, id string) (string, string, string, string) {
+//	var response InfoResponseTeacher
+//	client := req.C()
+//	_, _ = client.R().
+//		SetHeaders(map[string]string{
+//			"Authorization":   authorization,
+//			"Referer":         "https://servicewechat.com/wx23d8d7ea22039466/1908/page-frame.html",
+//			"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6500",
+//			"Content-Type":    "application/json",
+//			"Accept-Language": "zh-CN,zh",
+//		}).
+//		SetBodyJsonMarshal(map[string]string{
+//			"extra": "1",
+//			"_id":   id,
+//			"page":  "0",
+//			"size":  "10",
+//		}).
+//		SetSuccessResult(&response).
+//		Post("https://a.welife001.com/applet/notify/checkNew2Parent")
+//	answerid := response.Data.Accept.Answer.ID
+//	subjecteacherid := response.Data.Accept.Answer.SubjectTeacher[0].ID
+//	itemDetailsteacherid1 := response.Data.Accept.Answer.SubjectTeacher[0].ItemDetails[0].ID
+//	itemDetailsteacherid2 := response.Data.Accept.Answer.SubjectTeacher[0].ItemDetails[1].ID
+//	return answerid, subjecteacherid, itemDetailsteacherid1, itemDetailsteacherid2
+//}
