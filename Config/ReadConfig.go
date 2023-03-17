@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func ReadConfig() (string, string, string) {
+func ReadConfig() (string, string, string, string) {
 	config := viper.New()
 	config.AddConfigPath("./")
 	config.SetConfigName("config")
@@ -20,5 +20,6 @@ func ReadConfig() (string, string, string) {
 	cookie := config.GetString("Cookie")
 	authorization := config.GetString("Authorization")
 	member_id := config.GetString("member_id")
-	return cookie, authorization, member_id
+	identity := config.GetString("identity")
+	return cookie, authorization, member_id, identity
 }
