@@ -61,7 +61,7 @@ func GetInfo(authorization string, member_id string) (string, string) {
 }
 
 type InfoResponseStudent struct {
-	Data []InfoDataStudent `json:"data"`
+	Data InfoDataStudent `json:"data"`
 }
 
 type InfoDataStudent struct {
@@ -106,10 +106,10 @@ func GetInfoStudent(authorization string, id string) (string, string, string, st
 		}).
 		SetSuccessResult(&response).
 		Post("https://a.welife001.com/applet/notify/checkNew2Parent")
-	investid := response.Data[0].Notify.Invest.ID
-	subjectid := response.Data[0].Notify.Invest.Subject[0].ID
-	itemDetailstudentid1 := response.Data[0].Notify.Invest.Subject[0].ItemDetails[0].ID
-	itemDetailstudentid2 := response.Data[0].Notify.Invest.Subject[0].ItemDetails[1].ID
+	investid := response.Data.Notify.Invest.ID
+	subjectid := response.Data.Notify.Invest.Subject[0].ID
+	itemDetailstudentid1 := response.Data.Notify.Invest.Subject[0].ItemDetails[0].ID
+	itemDetailstudentid2 := response.Data.Notify.Invest.Subject[0].ItemDetails[1].ID
 	fmt.Println(investid, subjectid, itemDetailstudentid1, itemDetailstudentid2)
 	return investid, subjectid, itemDetailstudentid1, itemDetailstudentid2
 }
