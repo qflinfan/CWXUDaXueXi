@@ -1,6 +1,6 @@
 {
-  "Cookie" : "xxxx",
-  "Authorization" : "xxxx",
-  "member_id" : "xxxx",
-  "identity" : "xxxx"
+  "Cookie" : "laravel_session=7Z9Rw89HRSMM6jD2p8B390jdrms4qQe9uU0EAsfI",
+  "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuaWQiOiJvV1JrVTBUeExaOUluYy05bi1wNXBEM2xkSkxNIiwidW5pb25pZCI6Im90Z3pwdnluUklxcWtpMGVBTW1BMHJpQlRtSkkiLCJwbGF0Zm9ybSI6Im1pbmkiLCJleHAiOjE2ODQxNjE0MDE1NzgsImlhdCI6MTY3ODk3NzQwMX0.MH_Q-heUxjNC8oxWSP7cfol91y9otKsU-c8BPlRImxg",
+  "member_id" : "6181f40b9c918640530c4db0",
+  "identity": "teacher"
 }
