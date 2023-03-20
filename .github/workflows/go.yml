@@ -4,6 +4,9 @@
 name: Go
 
 on:
+  schedule:
+    - cron: "0 12 * * mon"
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:
